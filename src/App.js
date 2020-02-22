@@ -1,13 +1,18 @@
 import React, { Component } from "react";
 import CytoscapeComponent from "react-cytoscapejs";
 
+const BACKGROUND_COLOUR = "#262626";
+const ANS_HIGHLIGHT = "#9adbfe";
+
 export default class GraphCanvas extends Component {
+  nodeStyle = {};
+
   state = {
     w: 0,
     h: 0,
     elements: [
-      { data: { id: "one" }, position: { x: 0, y: 0 } },
-      { data: { id: "two" }, position: { x: 100, y: 0 } },
+      { data: { id: "one", label: "one" }, position: { x: 0, y: 0 } },
+      { data: { id: "two", label: "two" }, position: { x: 100, y: 0 } },
       {
         data: {
           source: "one",
@@ -37,7 +42,7 @@ export default class GraphCanvas extends Component {
     return (
       <div
         style={{
-          backgroundColor: "#262626"
+          backgroundColor: BACKGROUND_COLOUR
         }}
       >
         <CytoscapeComponent
@@ -50,6 +55,24 @@ export default class GraphCanvas extends Component {
             this.cy = cy;
           }}
           layout={layout}
+          stylesheet={[
+            {
+              selector: "node",
+              style: {
+                shape: "round-rectangle",
+                backgroundColor: BACKGROUND_COLOUR,
+                borderColor: ANS_HIGHLIGHT,
+                borderWidth: "1"
+              }
+            },
+            {
+              selector: "edge",
+              style: {
+                width: "1",
+                lineColor: ANS_HIGHLIGHT
+              }
+            }
+          ]}
         />
       </div>
     );
