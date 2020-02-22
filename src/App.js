@@ -1,26 +1,48 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import CytoscapeComponent from "react-cytoscapejs";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default class GraphCanvas extends Component {
+  state = {
+    w: 0,
+    h: 0,
+    elements: [
+      { data: { id: "one", label: "Node 1" }, position: { x: 0, y: 0 } },
+      { data: { id: "two", label: "Node 2" }, position: { x: 100, y: 0 } },
+      {
+        data: {
+          source: "one",
+          target: "two",
+          label: "Edge from Node1 to Node2"
+        }
+      }
+    ]
+  };
+
+  componentDidMount = () => {
+    this.setState({
+      w: window.innerWidth,
+      h: window.innerHeight
+    });
+    this.setUpListeners();
+  };
+
+  setUpListeners = () => {
+    this.cy.on("click", "node", event => {
+      console.log(event.target);
+    });
+  };
+
+  render() {
+    return (
+      <div>
+        <CytoscapeComponent
+          elements={this.state.elements}
+          style={{ width: this.state.w, height: this.state.h }}
+          cy={cy => {
+            this.cy = cy;
+          }}
+        />
+      </div>
+    );
+  }
 }
-
-export default App;
