@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/socratic-graph/static/css/main.5ecd60fb.chunk.css",
+    "main.js": "/socratic-graph/static/js/main.3045cac6.chunk.js",
+    "main.js.map": "/socratic-graph/static/js/main.3045cac6.chunk.js.map",
+    "runtime-main.js": "/socratic-graph/static/js/runtime-main.b82af8aa.js",
+    "runtime-main.js.map": "/socratic-graph/static/js/runtime-main.b82af8aa.js.map",
+    "static/js/2.fb3e362f.chunk.js": "/socratic-graph/static/js/2.fb3e362f.chunk.js",
+    "static/js/2.fb3e362f.chunk.js.map": "/socratic-graph/static/js/2.fb3e362f.chunk.js.map",
+    "index.html": "/socratic-graph/index.html",
+    "precache-manifest.8d9fcbf612adbe9d236b26469fd9e01f.js": "/socratic-graph/precache-manifest.8d9fcbf612adbe9d236b26469fd9e01f.js",
+    "service-worker.js": "/socratic-graph/service-worker.js",
+    "static/css/main.5ecd60fb.chunk.css.map": "/socratic-graph/static/css/main.5ecd60fb.chunk.css.map",
+    "static/js/2.fb3e362f.chunk.js.LICENSE.txt": "/socratic-graph/static/js/2.fb3e362f.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.b82af8aa.js",
+    "static/js/2.fb3e362f.chunk.js",
+    "static/css/main.5ecd60fb.chunk.css",
+    "static/js/main.3045cac6.chunk.js"
+  ]
+}
