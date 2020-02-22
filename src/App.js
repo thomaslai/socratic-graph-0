@@ -11,8 +11,11 @@ export default class GraphCanvas extends Component {
     w: 0,
     h: 0,
     elements: [
-      { data: { id: "one", label: "one" }, position: { x: 0, y: 0 } },
-      { data: { id: "two", label: "two" }, position: { x: 100, y: 0 } },
+      {
+        data: { id: "one", label: "one two\n three four five" },
+        position: { x: 0, y: 0 }
+      },
+      { data: { id: "two", label: "two" } },
       {
         data: {
           source: "one",
@@ -41,9 +44,11 @@ export default class GraphCanvas extends Component {
     const layout = { name: "cose" };
     return (
       <div
-        style={{
-          backgroundColor: BACKGROUND_COLOUR
-        }}
+        style={
+          {
+            backgroundColor: BACKGROUND_COLOUR
+          }
+        }
       >
         <CytoscapeComponent
           elements={this.state.elements}
@@ -62,14 +67,20 @@ export default class GraphCanvas extends Component {
                 shape: "round-rectangle",
                 backgroundColor: BACKGROUND_COLOUR,
                 borderColor: ANS_HIGHLIGHT,
-                borderWidth: "1"
+                borderWidth: "1",
+                textColor: "#ff0000",
+                textWrap: "wrap",
+                textHalign: "center",
+                textValign: "center"
               }
             },
             {
               selector: "edge",
               style: {
                 width: "1",
-                lineColor: ANS_HIGHLIGHT
+                lineColor: ANS_HIGHLIGHT,
+                targetArrowShape: "triangle",
+                targetArrowColor: ANS_HIGHLIGHT
               }
             }
           ]}
