@@ -33,6 +33,7 @@ export default class GraphCanvas extends Component {
   };
 
   render() {
+    const layout = { name: "cose" };
     return (
       <div>
         <CytoscapeComponent
@@ -41,6 +42,7 @@ export default class GraphCanvas extends Component {
           cy={cy => {
             this.cy = cy;
           }}
+          layout={layout}
         />
       </div>
     );
