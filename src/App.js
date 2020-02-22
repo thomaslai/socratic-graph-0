@@ -6,8 +6,8 @@ export default class GraphCanvas extends Component {
     w: 0,
     h: 0,
     elements: [
-      { data: { id: "one", label: "Node 1" }, position: { x: 0, y: 0 } },
-      { data: { id: "two", label: "Node 2" }, position: { x: 100, y: 0 } },
+      { data: { id: "one" }, position: { x: 0, y: 0 } },
+      { data: { id: "two" }, position: { x: 100, y: 0 } },
       {
         data: {
           source: "one",
@@ -35,10 +35,17 @@ export default class GraphCanvas extends Component {
   render() {
     const layout = { name: "cose" };
     return (
-      <div>
+      <div
+        style={{
+          backgroundColor: "#262626"
+        }}
+      >
         <CytoscapeComponent
           elements={this.state.elements}
-          style={{ width: this.state.w, height: this.state.h }}
+          style={{
+            width: this.state.w,
+            height: this.state.h
+          }}
           cy={cy => {
             this.cy = cy;
           }}
