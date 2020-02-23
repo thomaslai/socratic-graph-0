@@ -60,6 +60,7 @@ export default class GraphCanvas extends Component {
             this.cy = cy;
           }}
           layout={layout}
+          autoungrabify={true}
           stylesheet={[
             {
               selector: "node",
