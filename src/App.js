@@ -70,7 +70,9 @@ class GraphCanvas extends Component {
                 width: "1",
                 lineColor: ANS_HIGHLIGHT,
                 targetArrowShape: "triangle",
-                targetArrowColor: ANS_HIGHLIGHT
+                targetArrowColor: ANS_HIGHLIGHT,
+                directed: true,
+                curveStyle: "bezier"
               }
             }
           ]}
