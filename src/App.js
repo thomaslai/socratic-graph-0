@@ -6,6 +6,7 @@ import { addNode } from "./actions";
 const BACKGROUND_COLOUR = "#262626";
 const ANS_HIGHLIGHT = "#9adbfe";
 const TEXT_COLOUR = "white";
+const LAYOUT = { name: "cose", directed: true };
 
 class GraphCanvas extends Component {
   nodeStyle = {};
@@ -24,13 +25,23 @@ class GraphCanvas extends Component {
   };
 
   setUpListeners = () => {
-    this.cy.on("click", "node", event => {
-      console.log(event.target);
+    // When click on node, enter Edit Mode
+    this.cy.on("tap", (event, cy) => {
+      // target holds a reference to the originator
+      // of the event (core or element)
+      var evtTarget = event.target;
+
+      if (evtTarget === this.cy) {
+        console.log("tap on background");
+        this.cy.animate({ fit: this.props.elements });
+      } else {
+        console.log("tap on some element");
+        this.cy.animate({ zoom: 5, center: { eles: event.target } });
+      }
     });
   };
 
   render() {
-    const layout = { name: "cose", directed: true };
     return (
       <div
         style={{
@@ -46,7 +57,7 @@ class GraphCanvas extends Component {
           cy={cy => {
             this.cy = cy;
           }}
-          layout={layout}
+          layout={LAYOUT}
           autoungrabify={true}
           stylesheet={[
             {
