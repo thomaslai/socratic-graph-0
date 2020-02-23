@@ -30,13 +30,10 @@ class GraphCanvas extends Component {
       // target holds a reference to the originator
       // of the event (core or element)
       var evtTarget = event.target;
-
       if (evtTarget === this.cy) {
-        console.log("tap on background");
-        this.cy.animate({ fit: this.props.elements });
+        this.cy.animate({ fit: this.props.elements});
       } else {
-        console.log("tap on some element");
-        this.cy.animate({ zoom: 5, center: { eles: event.target } });
+        this.cy.animate({ zoom: 3, center: { eles: event.target } });
       }
     });
   };
