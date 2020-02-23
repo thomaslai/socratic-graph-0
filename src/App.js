@@ -43,7 +43,7 @@ export default class GraphCanvas extends Component {
   };
 
   render() {
-    const layout = { name: "cose" };
+    const layout = { name: "cose", directed: true };
     return (
       <div
         style={{
@@ -69,10 +69,11 @@ export default class GraphCanvas extends Component {
                 borderColor: ANS_HIGHLIGHT,
                 borderWidth: "1",
                 content: "data(label)",
-                textColor: TEXT_COLOUR,
+                color: TEXT_COLOUR,
                 textWrap: "wrap",
                 textHalign: "center",
-                textValign: "center"
+                textValign: "center",
+                padding: 12
               }
             },
             {
