@@ -13,8 +13,8 @@ export default class GraphCanvas extends Component {
     h: 0,
     elements: CytoscapeComponent.normalizeElements({
       nodes: [
-        { data: { id: "one", label: "Node 1" }, position: { x: 0, y: 0 } },
-        { data: { id: "two", label: "Node 2" }, position: { x: 100, y: 0 } }
+        { data: { id: "one", text: "Node 1" } },
+        { data: { id: "two", text: "Node 2" } }
       ],
       edges: [
         {
@@ -68,7 +68,7 @@ export default class GraphCanvas extends Component {
                 backgroundColor: BACKGROUND_COLOUR,
                 borderColor: ANS_HIGHLIGHT,
                 borderWidth: "1",
-                content: "data(label)",
+                content: "data(text)",
                 color: TEXT_COLOUR,
                 textWrap: "wrap",
                 textHalign: "center",
