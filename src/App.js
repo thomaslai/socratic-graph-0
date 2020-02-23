@@ -13,7 +13,8 @@ class GraphCanvas extends Component {
 
   state = {
     w: 0,
-    h: 0
+    h: 0,
+    isEditMode: false
   };
 
   componentDidMount = () => {
@@ -31,25 +32,41 @@ class GraphCanvas extends Component {
       // of the event (core or element)
       var evtTarget = event.target;
       if (evtTarget === this.cy) {
-        this.cy.animate({ fit: this.props.elements});
+        this.cy.animate({ fit: this.props.elements });
+        this.setState({
+          isEditMode: false
+        });
       } else {
         this.cy.animate({ zoom: 3, center: { eles: event.target } });
+        this.setState({
+          isEditMode: true
+        });
       }
     });
   };
 
   render() {
-    return (
+    const editOverlay = this.state.isEditMode ? (
       <div
         style={{
-          backgroundColor: BACKGROUND_COLOUR
+          backgroundColor: "black",
+          opacity: 0.5,
+          width: this.state.w,
+          height: this.state.h,
+          position: "absolute",
+          pointerEvents: "none"
         }}
-      >
+      ></div>
+    ) : null;
+    return (
+      <div>
         <CytoscapeComponent
           elements={CytoscapeComponent.normalizeElements(this.props.elements)}
           style={{
             width: this.state.w,
-            height: this.state.h
+            height: this.state.h,
+            position: "absolute",
+            backgroundColor: BACKGROUND_COLOUR
           }}
           cy={cy => {
             this.cy = cy;
@@ -85,6 +102,7 @@ class GraphCanvas extends Component {
             }
           ]}
         />
+        {editOverlay}
       </div>
     );
   }
