@@ -1,31 +1,18 @@
 import React, { Component } from "react";
 import CytoscapeComponent from "react-cytoscapejs";
+import { connect } from "react-redux";
+import { addNode } from "./actions";
 
 const BACKGROUND_COLOUR = "#262626";
 const ANS_HIGHLIGHT = "#9adbfe";
 const TEXT_COLOUR = "white";
 
-export default class GraphCanvas extends Component {
+class GraphCanvas extends Component {
   nodeStyle = {};
 
   state = {
     w: 0,
-    h: 0,
-    elements: CytoscapeComponent.normalizeElements({
-      nodes: [
-        { data: { id: "one", text: "Node 1" } },
-        { data: { id: "two", text: "Node 2" } }
-      ],
-      edges: [
-        {
-          data: {
-            source: "one",
-            target: "two",
-            label: "Edge from Node1 to Node2"
-          }
-        }
-      ]
-    })
+    h: 0
   };
 
   componentDidMount = () => {
@@ -51,7 +38,7 @@ export default class GraphCanvas extends Component {
         }}
       >
         <CytoscapeComponent
-          elements={this.state.elements}
+          elements={CytoscapeComponent.normalizeElements(this.props.elements)}
           style={{
             width: this.state.w,
             height: this.state.h
@@ -92,3 +79,13 @@ export default class GraphCanvas extends Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  elements: state.elements
+});
+
+const mapDispatchToProps = dispatch => ({
+  addNode: id => dispatch(addNode(id))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(GraphCanvas);
