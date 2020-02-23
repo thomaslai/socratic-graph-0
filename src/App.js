@@ -3,6 +3,7 @@ import CytoscapeComponent from "react-cytoscapejs";
 
 const BACKGROUND_COLOUR = "#262626";
 const ANS_HIGHLIGHT = "#9adbfe";
+const TEXT_COLOUR = "white";
 
 export default class GraphCanvas extends Component {
   nodeStyle = {};
@@ -10,20 +11,21 @@ export default class GraphCanvas extends Component {
   state = {
     w: 0,
     h: 0,
-    elements: [
-      {
-        data: { id: "one", label: "one two\n three four five" },
-        position: { x: 0, y: 0 }
-      },
-      { data: { id: "two", label: "two" } },
-      {
-        data: {
-          source: "one",
-          target: "two",
-          label: "Edge from Node1 to Node2"
+    elements: CytoscapeComponent.normalizeElements({
+      nodes: [
+        { data: { id: "one", label: "Node 1" }, position: { x: 0, y: 0 } },
+        { data: { id: "two", label: "Node 2" }, position: { x: 100, y: 0 } }
+      ],
+      edges: [
+        {
+          data: {
+            source: "one",
+            target: "two",
+            label: "Edge from Node1 to Node2"
+          }
         }
-      }
-    ]
+      ]
+    })
   };
 
   componentDidMount = () => {
@@ -44,11 +46,9 @@ export default class GraphCanvas extends Component {
     const layout = { name: "cose" };
     return (
       <div
-        style={
-          {
-            backgroundColor: BACKGROUND_COLOUR
-          }
-        }
+        style={{
+          backgroundColor: BACKGROUND_COLOUR
+        }}
       >
         <CytoscapeComponent
           elements={this.state.elements}
@@ -68,7 +68,8 @@ export default class GraphCanvas extends Component {
                 backgroundColor: BACKGROUND_COLOUR,
                 borderColor: ANS_HIGHLIGHT,
                 borderWidth: "1",
-                textColor: "#ff0000",
+                content: "data(label)",
+                textColor: TEXT_COLOUR,
                 textWrap: "wrap",
                 textHalign: "center",
                 textValign: "center"
