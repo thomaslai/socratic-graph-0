@@ -1,3 +1,5 @@
+import * as tools from "../helpers/graphTools";
+
 const initialState = {
   nodes: [
     { data: { id: "one", text: "Node 1" } },
@@ -7,8 +9,7 @@ const initialState = {
     {
       data: {
         source: "one",
-        target: "two",
-        label: "Edge from Node1 to Node2"
+        target: "two"
       }
     }
   ]
@@ -18,8 +19,18 @@ const elements = (state = initialState, action) => {
   switch (action.type) {
     case "ADD_NODE":
       return { ...state };
+    case "REMOVE_NODE":
+      // remove all child nodes
+      // remove all edges with reference to the child nodes
+      const childIdsToRemove = tools.getChildIds(action.id, state.edges);
+      const returnVal = {
+        ...state,
+        nodes: tools.filterOutNodesWithIds(childIdsToRemove, state.nodes),
+        edges: tools.filterOutEdgesWithTargetIds(childIdsToRemove, state.edges)
+      };
+      return returnVal;
     case "EDIT_NODE":
-      const returnObject = {
+      return {
         ...state,
         nodes: state.nodes.map((node, index) => {
           if (node.data.id !== action.id) {
@@ -34,8 +45,6 @@ const elements = (state = initialState, action) => {
           }
         })
       };
-      console.log("return object", returnObject);
-      return returnObject;
     default:
       return state;
   }

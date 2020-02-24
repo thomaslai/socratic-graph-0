@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import CytoscapeComponent from "react-cytoscapejs";
 import { connect } from "react-redux";
-import { editNode } from "./actions";
+import { editNode, removeNode } from "./actions";
 import Dialog from "@material-ui/core/Dialog";
 import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
 
 const BACKGROUND_COLOUR = "#262626";
 const ANS_HIGHLIGHT = "#9adbfe";
@@ -71,6 +72,15 @@ class GraphCanvas extends Component {
     });
   };
 
+  onNodeDelete = () => {
+    this.props.removeNode(this.state.editedNodeId);
+    this.setState({
+      isEditMode: false,
+      editedNodeId: null,
+      editedText: ""
+    });
+  };
+
   render() {
     const editDialog = (
       <Dialog
@@ -97,6 +107,9 @@ class GraphCanvas extends Component {
           }}
           onChange={this.onTextChange}
         />
+        <Button onClick={this.onNodeDelete} style={{ color: TEXT_COLOUR }}>
+          Delete Node
+        </Button>
       </Dialog>
     );
     return (
@@ -161,7 +174,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  editNode: (id, text) => dispatch(editNode(id, text))
+  editNode: (id, text) => dispatch(editNode(id, text)),
+  removeNode: id => dispatch(removeNode(id))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(GraphCanvas);

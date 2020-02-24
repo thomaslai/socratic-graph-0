@@ -4,6 +4,10 @@ export const addNode = text => ({
   id: nextNodeId++,
   text
 });
+export const removeNode = id => ({
+  type: "REMOVE_NODE",
+  id
+});
 export const editNode = (id, text) => ({
   type: "EDIT_NODE",
   id,
