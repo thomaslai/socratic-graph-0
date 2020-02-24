@@ -4,3 +4,8 @@ export const addNode = text => ({
   id: nextNodeId++,
   text
 });
+export const editNode = (id, text) => ({
+  type: "EDIT_NODE",
+  id,
+  text
+});

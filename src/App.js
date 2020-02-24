@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import CytoscapeComponent from "react-cytoscapejs";
 import { connect } from "react-redux";
-import { addNode } from "./actions";
+import { editNode } from "./actions";
+import Dialog from "@material-ui/core/Dialog";
+import TextField from "@material-ui/core/TextField";
 
 const BACKGROUND_COLOUR = "#262626";
 const ANS_HIGHLIGHT = "#9adbfe";
@@ -14,7 +16,9 @@ class GraphCanvas extends Component {
   state = {
     w: 0,
     h: 0,
-    isEditMode: false
+    isEditMode: false,
+    editedNodeId: null,
+    editedText: ""
   };
 
   componentDidMount = () => {
@@ -27,39 +31,86 @@ class GraphCanvas extends Component {
 
   setUpListeners = () => {
     // When click on node, enter Edit Mode
-    this.cy.on("tap", (event, cy) => {
+    this.cy.on("tap", event => {
       // target holds a reference to the originator
       // of the event (core or element)
       var evtTarget = event.target;
       if (evtTarget === this.cy) {
-        this.cy.animate({ fit: this.props.elements });
-        this.setState({
-          isEditMode: false
-        });
-      } else {
+        return;
+      }
+      if (evtTarget.isNode()) {
+        // click node
         this.cy.animate({ zoom: 3, center: { eles: event.target } });
         this.setState({
-          isEditMode: true
+          isEditMode: true,
+          editedNodeId: evtTarget._private.data.id,
+          editedText: evtTarget._private.data.text
         });
+        console.log(evtTarget);
       }
     });
   };
 
+  handleClose = () => {
+    if (this.cy === null || this.cy === undefined) {
+      console.warn("this.cy null or undefined!");
+      return;
+    }
+    this.cy.animate({ fit: this.props.elements });
+    this.props.editNode(this.state.editedNodeId, this.state.editedText);
+    this.setState({
+      isEditMode: false,
+      editedNodeId: null,
+      editedText: ""
+    });
+  };
+
+  onTextChange = event => {
+    this.setState({
+      editedText: event.target.value
+    });
+  };
+
   render() {
-    const editOverlay = this.state.isEditMode ? (
+    const editDialog = (
+      <Dialog
+        open={this.state.isEditMode}
+        onClose={this.handleClose}
+        PaperProps={{
+          style: {
+            backgroundColor: BACKGROUND_COLOUR
+          }
+        }}
+      >
+        <TextField
+          autoFocus
+          margin="dense"
+          fullWidth
+          multiline
+          value={this.state.editedText}
+          style={{
+            backgroundColor: BACKGROUND_COLOUR,
+            fontColor: TEXT_COLOUR
+          }}
+          inputProps={{
+            style: {
+              color: TEXT_COLOUR
+            }
+          }}
+          onChange={this.onTextChange}
+        />
+      </Dialog>
+    );
+    return (
       <div
         style={{
-          backgroundColor: "black",
-          opacity: 0.5,
           width: this.state.w,
           height: this.state.h,
-          position: "absolute",
-          pointerEvents: "none"
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center"
         }}
-      ></div>
-    ) : null;
-    return (
-      <div>
+      >
         <CytoscapeComponent
           elements={CytoscapeComponent.normalizeElements(this.props.elements)}
           style={{
@@ -96,13 +147,12 @@ class GraphCanvas extends Component {
                 lineColor: ANS_HIGHLIGHT,
                 targetArrowShape: "triangle",
                 targetArrowColor: ANS_HIGHLIGHT,
-                directed: true,
                 curveStyle: "bezier"
               }
             }
           ]}
         />
-        {editOverlay}
+        {editDialog}
       </div>
     );
   }
@@ -113,7 +163,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  addNode: id => dispatch(addNode(id))
+  editNode: (id, text) => dispatch(editNode(id, text))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(GraphCanvas);

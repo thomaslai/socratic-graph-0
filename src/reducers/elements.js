@@ -17,7 +17,24 @@ const initialState = {
 const elements = (state = initialState, action) => {
   switch (action.type) {
     case "ADD_NODE":
-      return [...state, {}];
+      return { ...state };
+    case "EDIT_NODE":
+      const returnObject = {
+        ...state,
+        nodes: state.nodes.map((node, index) => {
+          if (node.data.id !== action.id) {
+            return node;
+          } else {
+            return {
+              data: {
+                id: node.id,
+                text: action.text
+              }
+            };
+          }
+        })
+      };
+      return returnObject;
     default:
       return state;
   }
