@@ -27,13 +27,14 @@ const elements = (state = initialState, action) => {
           } else {
             return {
               data: {
-                id: node.id,
+                id: node.data.id,
                 text: action.text
               }
             };
           }
         })
       };
+      console.log("return object", returnObject);
       return returnObject;
     default:
       return state;
