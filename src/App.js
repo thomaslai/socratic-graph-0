@@ -79,6 +79,7 @@ class GraphCanvas extends Component {
       editedNodeId: null,
       editedText: ""
     });
+    this.cy.animate({ fit: this.props.elements });
   };
 
   render() {

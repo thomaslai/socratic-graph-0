@@ -23,12 +23,11 @@ const elements = (state = initialState, action) => {
       // remove all child nodes
       // remove all edges with reference to the child nodes
       const childIdsToRemove = tools.getChildIds(action.id, state.edges);
-      const returnVal = {
+      return {
         ...state,
         nodes: tools.filterOutNodesWithIds(childIdsToRemove, state.nodes),
         edges: tools.filterOutEdgesWithTargetIds(childIdsToRemove, state.edges)
       };
-      return returnVal;
     case "EDIT_NODE":
       return {
         ...state,
