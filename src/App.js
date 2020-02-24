@@ -83,7 +83,6 @@ class GraphCanvas extends Component {
         }}
       >
         <TextField
-          autoFocus
           fullWidth
           multiline
           value={this.state.editedText}
